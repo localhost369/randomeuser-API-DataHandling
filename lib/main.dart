@@ -13,29 +13,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: 'Flutter Demo Home Page'),
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  final String title;
-  HomePage({Key key, @required this.title}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final String url = "https://randomuser.me/api/?results=50";
   List usersData;
   bool isLoading = true;
 
   Future<String> getData() async {
-    var responce =
-        await http.get(Uri.encodeFull("https://randomuser.me/api/?results=50"));
+    var responce = await http.get(Uri.encodeFull(url));
     //this time body is also in form of list (like bodyData->List(results) && result[0]->List)
     List convertToJSON = json.decode(responce.body)['results'];
     setState(() {
